@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package storage;
+
+option go_package = "github.com/take-bit/file-storage-service-proto/gen/storage-service/go";
+
+service FileService {
+  rpc SaveFile(stream SaveFileRequest) returns (SaveFileResponse);
+}
+
+
+message SaveFileRequest {
+  oneof payload {
+    FileMetadata metadata = 1;
+    bytes data = 2;
+  }
+}
+
+message FileMetadata {
+  string filename = 1;
+  float size = 2;
+}
+
+message SaveFileResponse {
+  bool success = 1;
+  string message = 2;
+}
